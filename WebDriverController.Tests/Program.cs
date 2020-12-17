@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.Events;
+using RafaelEstevam.Simple.Spider.Helper;
 using RafaelEstevam.WebDriverController.Lib;
 using RafaelEstevam.WebDriverController.Lib.Actions;
 
@@ -34,6 +35,8 @@ ctr.Do(new Redirect("http://quotes.toscrape.com/"))
            // all html is at:
            var html = c.PageSource;
            // Extract all the things !
+           var document = HtmlParseHelper.ParseHtmlDocument(html);
+
        })
    // end the party
    .Quit();

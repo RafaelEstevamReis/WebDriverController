@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="RafaelEstevam.Simple.Spider" Version="0.7.458" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\WebDriverController.Lib\WebDriverController.Lib.csproj" />
   </ItemGroup>
 
