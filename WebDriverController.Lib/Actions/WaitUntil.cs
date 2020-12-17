@@ -7,7 +7,7 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
 {
     public sealed class WaitUntil : IWDAction
     {
-        public enum Verification 
+        public enum Is 
         {
             Exists,
             Visible,
@@ -17,9 +17,9 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
         public IWDActionResult Result { get; set; } = new Results.None();
         public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(10);
         public By Element { get; }
-        public Verification Test { get; }
+        public Is Test { get; }
 
-        public WaitUntil(By Element, Verification test)
+        public WaitUntil(By Element, Is test)
         {
             this.Element = Element ?? throw new ArgumentNullException(nameof(Element));
             Test = test;
@@ -42,18 +42,18 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
                     wElement = null;
                 }
 
-                if (Test == Verification.Exists)
+                if (Test == Is.Exists)
                 {
                     return wElement != null;
                 }
 
                 if (wElement == null) return false;
                 
-                if (Test == Verification.Visible)
+                if (Test == Is.Visible)
                 {
                     return wElement.Displayed;
                 }
-                else if (Test == Verification.Clickable)
+                else if (Test == Is.Clickable)
                 {
                     return wElement.Displayed && wElement.Enabled;
                 }
@@ -65,8 +65,8 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
         }
 
 
-        public static WaitUntil Exists(By Element) => new WaitUntil(Element, Verification.Exists);
-        public static WaitUntil IsClickable(By Element) => new WaitUntil(Element, Verification.Clickable);
-        public static WaitUntil IsVisible(By Element) => new WaitUntil(Element, Verification.Visible);
+        public static WaitUntil Exists(By Element) => new WaitUntil(Element, Is.Exists);
+        public static WaitUntil IsClickable(By Element) => new WaitUntil(Element, Is.Clickable);
+        public static WaitUntil IsVisible(By Element) => new WaitUntil(Element, Is.Visible);
     }
 }

@@ -1,40 +1,49 @@
 ﻿using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.Events;
 using RafaelEstevam.WebDriverController.Lib;
 using RafaelEstevam.WebDriverController.Lib.Actions;
 
-using (IWebDriver driver = new ChromeDriver())
-{
-    var homeURL = "http://quotes.toscrape.com/";
+using IWebDriver driver = new ChromeDriver();
+var ctr = new WDController(driver);
 
-    var ctr = new WDController(driver);
+ctr.Navigated += navigated;
 
-    ctr.Do(new Redirect(homeURL))
-       .Do(new WaitUntil(By.LinkText("(about)"), WaitUntil.Verification.Clickable))
-       .Inspect((WDController c, IWebDriver d) =>
-           {
-               // see stuff
-           })
-       .Do(new Interact(By.LinkText("Login"), (w, e) =>
-            {
-                e.Click();
-            }))
-       .Do(new WaitUntil(By.XPath("//form/input[2]"), WaitUntil.Verification.Clickable))
-       .Inspect((WDController c, IWebDriver d) =>
-           {
-               d.FindElement(By.Id("username")).SendKeys("secret");
-               d.FindElement(By.Id("password")).SendKeys("secret");
-               d.FindElement(By.XPath("//form/input[2]")).Submit();
-           })
-       .Inspect((WDController c, IWebDriver d) =>
-           {
-               System.Console.WriteLine("Logged in !");
-           })
-       ;
+ctr.Do(new Redirect("http://quotes.toscrape.com/"))
+    // wait until first quotes are visivle (author clicable)
+   .Do(new WaitUntil(By.LinkText("(about)"), WaitUntil.Is.Clickable))
+   .Do(new Interact(By.LinkText("Login"), (w, e) =>
+       {
+           e.Click();
+       }))
+   .Do(new WaitUntil(By.XPath("//form/input[2]"), WaitUntil.Is.Clickable))
+   .Inspect((WDController c, IWebDriver d) =>
+       {
+           d.FindElement(By.Id("username")).SendKeys("secret");
+           d.FindElement(By.Id("password")).SendKeys("secret");
 
+           // take proof
+           var ss = c.GetScreenshot();
 
-}
+           d.FindElement(By.XPath("//form/input[2]")).Submit();
+       })
+   .Inspect((WDController c, IWebDriver d) =>
+       {
+           Console.WriteLine("Logged in !");
+           // all html is at:
+           var html = c.PageSource;
+           // Extract all the things !
+       })
+   // end the party
+   .Quit();
 
 Console.WriteLine("-END-");
 Console.ReadKey();
+
+
+
+static void navigated(object sender, WebDriverNavigationEventArgs args)
+{
+    Console.WriteLine($"I'm at: {args.Url}");
+}

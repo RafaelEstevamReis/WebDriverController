@@ -10,7 +10,9 @@ namespace RafaelEstevam.WebDriverController.Lib
 
         public WDController(IWebDriver driver) :
             base (driver)
-        {  }
+        { 
+            
+        }
 
         public WDController Do(IWDAction action)
         {
