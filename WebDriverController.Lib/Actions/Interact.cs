@@ -7,7 +7,7 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
 {
     public sealed class Interact : IWDAction
     {
-        public Interact(By locator, Action<IWebDriver,IWebElement> action)
+        public Interact(By locator, Action<IWebDriver, IWebElement> action)
         {
             Locator = locator ?? throw new ArgumentNullException(nameof(locator));
             Action = action ?? throw new ArgumentNullException(nameof(action));
@@ -43,6 +43,13 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
             });
 
             return new Results.None();
+        }
+    }
+    public static class InteractExtension
+    {
+        public static WDController Interact(this WDController controller, By locator, Action<IWebDriver, IWebElement> action)
+        {
+            return controller.Do(new Interact(locator, action));
         }
     }
 }

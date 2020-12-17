@@ -69,4 +69,19 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
         public static WaitUntil IsClickable(By Element) => new WaitUntil(Element, Is.Clickable);
         public static WaitUntil IsVisible(By Element) => new WaitUntil(Element, Is.Visible);
     }
+    public static class InteractWaitUntil
+    {
+        public static WDController WaitUntil_Visible(this WDController controller, By locator)
+        {
+            return controller.Do(WaitUntil.IsVisible(locator));
+        }
+        public static WDController WaitUntil_IsClickable(this WDController controller, By locator)
+        {
+            return controller.Do(WaitUntil.IsClickable(locator));
+        }
+        public static WDController WaitUntil_Exists(this WDController controller, By locator)
+        {
+            return controller.Do(WaitUntil.Exists(locator));
+        }
+    }
 }
