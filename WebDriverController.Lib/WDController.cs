@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.Events;
+using RafaelEstevam.WebDriverController.Lib.Interfaces;
 
 namespace RafaelEstevam.WebDriverController.Lib
 {

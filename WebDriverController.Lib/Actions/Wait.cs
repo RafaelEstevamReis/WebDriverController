@@ -1,6 +1,7 @@
 ﻿using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using RafaelEstevam.WebDriverController.Lib.Interfaces;
 
 namespace RafaelEstevam.WebDriverController.Lib.Actions
 {
