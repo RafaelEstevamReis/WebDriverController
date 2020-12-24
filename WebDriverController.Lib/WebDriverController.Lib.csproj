@@ -3,10 +3,21 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>RafaelEstevam.WebDriverController.Lib</RootNamespace>
+    <PackageId>RafaelEstevam.WebDriverController</PackageId>
+    <Version>0.2.15</Version>
+    <Company>RafaelEstevam</Company>
+    <Product>RafaelEstevam.WebDriverController</Product>
+    <Description>A helper controller for OpenQA Selenium WebDriver</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/RafaelEstevamReis/WebDriverController</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/RafaelEstevamReis/WebDriverController</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>webdriver</PackageTags>
+    <PackageReleaseNotes>Paired with commit daed4b1
+https://github.com/RafaelEstevamReis/WebDriverController</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Selenium.Chrome.WebDriver" Version="85.0.0" />
     <PackageReference Include="Selenium.Support" Version="3.141.0" />
     <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
   </ItemGroup>
