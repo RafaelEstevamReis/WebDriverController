@@ -1,21 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace RafaelEstevam.WebDriverController.Lib.Proxy
 {
     public class ProxyServer
     {
+        public event EventHandler<ProxyDataEventArgs> ProxyData;
+        public event EventHandler<TunnelDataArgs> RawTunnelData;
+
         public int ListeningPort { get; }
         public TcpListener TcpListener { get; private set; } = null;
 
         CancellationTokenSource  tokenSource;
         List<ProxyClient> clients;
+        private Tunnel tunnel;
+
+        public long TotalDownload => tunnel.TotalDownload;
+        public long TotalUpload => tunnel.TotalUpload;
 
         public ProxyServer(int ListeningPort)
         {
@@ -26,120 +34,112 @@ namespace RafaelEstevam.WebDriverController.Lib.Proxy
 
         public void Start()
         {
+            var tk = tokenSource.Token;
+
             TcpListener = new TcpListener(new IPEndPoint(0, ListeningPort));
             TcpListener.Start();
-
-            var tk = tokenSource.Token;
             tk.Register(TcpListener.Stop);
-            // fire and forget
-            Task.Run(() => mainLoop(tk));
+
+            tunnel = new Tunnel(TcpListener, clients);
+
+            tunnel.Create(tk, dataCallBack);
+        }
+        List<int> lstDataLen = new List<int>();
+        private void dataCallBack(TunnelDataArgs args)
+        {
+            RawTunnelData?.Invoke(this, args);
+            lstDataLen.Add(args.Data.Length);
+
+            if (ProxyData == null) return;
+
+            var hdrCollection = tryDecodeHttpHeader(args);
+
+            if (hdrCollection != null)
+            {
+                ProxyHttptHeaderEventArgs header;
+
+                if (args.FlowDirection == TunnelDataArgs.Direction.FromBrowser)
+                {
+                    header = new ProxyHttpRequestHeaderEventArgs()
+                    {
+                        Headers = hdrCollection,
+                        PacketId = args.PacketId,
+                        Timestamp = args.Timestamp,
+                    };
+                }
+                else
+                {
+                    header = new ProxyHttpResponseHeaderEventArgs()
+                    {
+                        Headers = hdrCollection,
+                        PacketId = args.PacketId,
+                        Timestamp = args.Timestamp,
+                    };
+                }
+                ProxyData(this, header);
+            }
+        }
+
+        private HttpHeader tryDecodeHttpHeader(TunnelDataArgs args)
+        {
+            if (args.Data.Length < 5) return null;
+
+            switch ((char)args.Data[0])
+            {
+                case 'G': // Get
+                case 'P': // Post/Put
+                case 'D': // Delete
+                case 'F': // Fetch
+                case 'H': // Http response
+                    break;
+                default:
+                    return null;
+            }
+            switch ((char)args.Data[1])
+            {
+                case 'E': // Get/Fetch/Delete
+                case 'e':
+                case 'O': // Post
+                case 'o':
+                case 'U': // Put
+                case 'u': 
+                case 'T': // Http response
+                    break;
+                default:
+                    return null;
+            }
+
+            using (var ms = new MemoryStream(args.Data))
+            {
+                var lst = new List<KeyValuePair<string, string>>();
+
+                var sr = new StreamReader(ms, Encoding.ASCII);
+                string line;
+                while (!string.IsNullOrEmpty(line = sr.ReadLine()))
+                {
+                    int idx = line.IndexOf(":");
+
+                    if (idx <= 0)
+                    {
+                        lst.Add(new KeyValuePair<string, string>("", line));
+                    }
+                    else
+                    {
+                        lst.Add(new KeyValuePair<string, string>(line.Substring(0, idx), line.Substring(idx + 1)));
+                    }
+                }
+                return HttpHeader.Build(lst);
+            }
         }
 
         public void Stop()
         {
             tokenSource.Cancel();
+
+            var avg = lstDataLen.Average();
+            var min = lstDataLen.Min();
+            var max = lstDataLen.Max();
         }
-
-        // fire and forget
-        private async void mainLoop(CancellationToken token)
-        {
-            while (!token.IsCancellationRequested)
-            {
-                await checkNewConnectionsAsync();
-                await checkClientsListAsync();
-                cleanClientsList();
-            }
-        }
-        private async Task checkNewConnectionsAsync()
-        {
-            if (TcpListener.Pending())
-            {
-                TcpClient client = await TcpListener.AcceptTcpClientAsync();
-                clients.Add(new ProxyClient(client));
-            }
-        }
-
-        private void cleanClientsList()
-        {
-            var closed = clients.Where(c => !c.Browser.Connected)
-                                .ToArray(); // force enumerate
-
-            foreach (var c in closed)
-            {
-                clients.Remove(c);
-            }
-        }
-
-        private async Task checkClientsListAsync()
-        {
-            foreach (var c in clients)
-            {
-                if (c == null) continue; // will be removed
-                if(!c.Browser.Connected) continue;
-
-                if (c.Browser.Available > 0)
-                {
-                    await processIncomingDataAsync(c);
-                }
-                if (c.External != null && c.External.Available > 0)
-                {
-                    await processOutgoingDataAsync(c);
-                }
-            }
-        }
-
-        private async Task processIncomingDataAsync(ProxyClient client)
-        {
-            var stream = client.Browser.GetStream();
-
-            int len;
-            byte[] buffer = new byte[1024];
-            while (client.Browser.Available > 0 )
-            {
-                len = await stream.ReadAsync(buffer, 0, buffer.Length);
-                // process GET and POST commands to get the "Host:" header
-                await bufferHookAsync(client, buffer, len, true);
-                
-                await client.External.GetStream().WriteAsync(buffer, 0, len);
-            }
-        }
-
-        private async Task processOutgoingDataAsync(ProxyClient client)
-        {
-            var stream = client.External.GetStream();
-
-            int len;
-            byte[] buffer = new byte[1024];
-            while (client.External.Available > 0)
-            {
-                len = await stream.ReadAsync(buffer, 0, buffer.Length);
-
-                await bufferHookAsync(client, buffer, len, false);
-
-                await client.Browser.GetStream().WriteAsync(buffer, 0, len);
-            }
-        }
-
-        private async Task bufferHookAsync(ProxyClient client, byte[] buffer, int len, bool fromBrowser)
-        {
-            if (!fromBrowser) return;
-
-            if (buffer[0] == 'G' || buffer[0] == 'P')
-            {
-                var ascii = Encoding.ASCII.GetString(buffer, 0, len);
-                // capture HOST
-                foreach (var line in ascii.Split('\n'))
-                {
-                    if (!line.StartsWith("Host:")) continue;
-
-                    string host = line.Split(':')[1].Trim();
-                    await client.ConnectTo(host, 80);
-                    break;
-                }
-            }
-
-        }
-
 
     }
 }
