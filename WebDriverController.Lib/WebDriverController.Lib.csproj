@@ -13,7 +13,7 @@
     <RepositoryUrl>https://github.com/RafaelEstevamReis/WebDriverController</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>webdriver</PackageTags>
-    <PackageReleaseNotes>Paired with commit daed4b1
+    <PackageReleaseNotes>Paired with commit 116e6c3
 https://github.com/RafaelEstevamReis/WebDriverController</PackageReleaseNotes>
   </PropertyGroup>
 
