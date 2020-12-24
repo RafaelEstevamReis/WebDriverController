@@ -5,8 +5,19 @@ using OpenQA.Selenium.Support.Events;
 using RafaelEstevam.Simple.Spider.Helper;
 using RafaelEstevam.WebDriverController.Lib;
 using RafaelEstevam.WebDriverController.Lib.Actions;
+using RafaelEstevam.WebDriverController.Lib.Proxy;
 
-using IWebDriver driver = new ChromeDriver();
+//var proxy = new ProxyServer(8080);
+//proxy.Start();
+
+ChromeOptions opt = new ChromeOptions();
+//opt.Proxy = new Proxy()
+//{
+//    HttpProxy = "127.0.0.1:8080",
+//    Kind = ProxyKind.Manual,
+//};
+
+using IWebDriver driver = new ChromeDriver(opt);
 var ctr = new WDController(driver);
 
 ctr.Navigated += navigated;
