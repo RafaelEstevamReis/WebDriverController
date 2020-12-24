@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net5.0</TargetFrameworks>
     <RootNamespace>RafaelEstevam.WebDriverController.Lib</RootNamespace>
     <PackageId>RafaelEstevam.WebDriverController</PackageId>
     <Version>0.2.15</Version>
