@@ -35,7 +35,7 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
                 // has to exists here
                 IWebElement wElement = driver.FindElement(Element);
 
-                wait.Until((driver) =>
+                wait.Until((d) =>
                 {
                     try
                     {

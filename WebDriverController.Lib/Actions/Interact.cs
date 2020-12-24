@@ -21,13 +21,13 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
         {
             var wait = new WebDriverWait(driver, Timeout);
 
-            wait.Until((driver) =>
+            wait.Until((d) =>
             {
                 IWebElement wElement;
 
                 try
                 {
-                    wElement = driver.FindElement(Locator);
+                    wElement = d.FindElement(Locator);
                 }
                 catch (NoSuchElementException)
                 {
@@ -37,7 +37,7 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
 
                 if (!wElement.Enabled) return false;
 
-                Action(driver, wElement);
+                Action(d, wElement);
 
                 return true;
             });
