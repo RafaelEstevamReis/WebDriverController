@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.Events;
 using RafaelEstevam.WebDriverController.Lib.Interfaces;
@@ -7,11 +9,10 @@ namespace RafaelEstevam.WebDriverController.Lib
 {
     public class WDController : EventFiringWebDriver
     {
-
         public WDController(IWebDriver driver) :
             base (driver)
-        { 
-            
+        {
+
         }
 
         public WDController Do(IWDAction action)
@@ -37,6 +38,30 @@ namespace RafaelEstevam.WebDriverController.Lib
         {
             action(WrappedDriver);
             return this;
+        }
+
+        public WDController InspectIf(Func<WDController, bool> condition, Action<WDController, IWebDriver> action)
+        {
+            if (condition(this))
+            {
+                return Inspect(action);
+            }
+            return this;
+        }
+
+        public IWebElement FirstElementOrDefault(By by)
+        {
+            try
+            {
+                var element = WrappedDriver.FindElement(by);
+                return element;
+            }
+            catch (NoSuchElementException) { return null; }
+            catch { throw; }
+        }
+        public bool ElementExists(By by)
+        {
+            return FirstElementOrDefault(by) != null;
         }
     }
 }
