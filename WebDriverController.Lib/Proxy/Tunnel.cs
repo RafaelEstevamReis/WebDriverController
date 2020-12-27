@@ -167,6 +167,20 @@ namespace RafaelEstevam.WebDriverController.Lib.Proxy
                     return;
                 }
             }
+            if (buffer[0] == 'C')
+            {
+                var ascii = Encoding.ASCII.GetString(buffer, 0, len);
+                /*
+                     CONNECT accounts.google.com:443 HTTP/1.1
+                     Host: accounts.google.com:443
+                     Proxy-Connection: keep-alive
+                     User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36
+                 */
+                var hostPair = ascii.Split(' ')[1].Trim().Split(':');
+                if (!int.TryParse(hostPair[1], out int port)) port = 443;
+
+                await client.ConnectTo(hostPair[0], port);
+            }
         }
     }
 }

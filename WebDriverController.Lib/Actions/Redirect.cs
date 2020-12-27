@@ -21,4 +21,15 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
             return new Results.Redirect(Uri);
         }
     }
+    public static class RedirectExtension
+    {
+        public static WDController GoTo(this WDController wDController, Uri uri)
+        {
+            return wDController.Do(new Redirect(uri));
+        }
+        public static WDController GoTo(this WDController wDController, string url)
+        {
+            return wDController.Do(new Redirect(url));
+        }
+    }
 }

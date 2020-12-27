@@ -7,6 +7,8 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
 {
     public sealed class WaitUntil : IWDAction
     {
+        public static TimeSpan DefaultTimeout { get; set; } = TimeSpan.FromMinutes(1);
+
         public enum Is 
         {
             Exists,
@@ -16,7 +18,7 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
         }
 
         public IWDActionResult Result { get; set; } = new Results.None();
-        public TimeSpan Timeout { get; set; } = TimeSpan.FromMinutes(1);
+        public TimeSpan Timeout { get; set; } = DefaultTimeout;
         public By Element { get; }
         public Is Test { get; }
 
@@ -109,6 +111,7 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
             w.Timeout = timeout;
             return controller.Do(w);
         }
+
         public static WDController WaitUntil_IsClickable(this WDController controller, By locator)
         {
             return controller.Do(WaitUntil.IsClickable(locator));
@@ -119,6 +122,7 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
             w.Timeout = timeout;
             return controller.Do(w);
         }
+
         public static WDController WaitUntil_Exists(this WDController controller, By locator)
         {
             return controller.Do(WaitUntil.Exists(locator));
@@ -129,6 +133,7 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
             w.Timeout = timeout;
             return controller.Do(w);
         }
+
         public static WDController WaitUntil_IsDestroyed(this WDController controller, By locator)
         {
             return controller.Do(WaitUntil.IsDestroyed(locator));

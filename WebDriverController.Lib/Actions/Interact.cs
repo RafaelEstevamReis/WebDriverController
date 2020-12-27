@@ -7,14 +7,14 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
 {
     public sealed class Interact : IWDAction
     {
-        public Interact(By locator, Action<IWebDriver, IWebElement> action)
+        public Interact(By locator, Action<WDController, IWebElement> action)
         {
             Locator = locator ?? throw new ArgumentNullException(nameof(locator));
             Action = action ?? throw new ArgumentNullException(nameof(action));
         }
 
         public By Locator { get; }
-        public Action<IWebDriver, IWebElement> Action { get; }
+        public Action<WDController, IWebElement> Action { get; }
         public TimeSpan Timeout { get; private set; } = TimeSpan.FromSeconds(10);
 
         public IWDActionResult Execute(WDController wDController, IWebDriver driver)
@@ -37,7 +37,7 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
 
                 if (!wElement.Enabled) return false;
 
-                Action(d, wElement);
+                Action(wDController, wElement);
 
                 return true;
             });
@@ -47,7 +47,7 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
     }
     public static class InteractExtension
     {
-        public static WDController Interact(this WDController controller, By locator, Action<IWebDriver, IWebElement> action)
+        public static WDController Interact(this WDController controller, By locator, Action<WDController, IWebElement> action)
         {
             return controller.Do(new Interact(locator, action));
         }

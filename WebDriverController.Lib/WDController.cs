@@ -22,23 +22,13 @@ namespace RafaelEstevam.WebDriverController.Lib
             return this;
         }
 
-        public WDController Inspect(Action<WDController, IWebDriver> action)
-        {
-            action(this, WrappedDriver);
-            return this;
-        }
         public WDController Inspect(Action<WDController> action)
         {
             action(this);
             return this;
         }
-        public WDController Inspect(Action<IWebDriver> action)
-        {
-            action(WrappedDriver);
-            return this;
-        }
 
-        public WDController InspectIf(Func<WDController, bool> condition, Action<WDController, IWebDriver> action)
+        public WDController InspectIf(Func<WDController, bool> condition, Action<WDController> action)
         {
             if (condition(this))
             {
