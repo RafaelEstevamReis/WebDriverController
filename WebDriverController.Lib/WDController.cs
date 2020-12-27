@@ -27,12 +27,17 @@ namespace RafaelEstevam.WebDriverController.Lib
             action(this);
             return this;
         }
-
-        public WDController InspectIf(Func<WDController, bool> condition, Action<WDController> action)
+        public WDController InspectIf(Func<WDController, bool> condition, 
+                                      Action<WDController> action, 
+                                      Action<WDController> actionElse = null)
         {
             if (condition(this))
             {
                 return Inspect(action);
+            }
+            else if(actionElse == null)
+            {
+                return Inspect(actionElse);
             }
             return this;
         }
