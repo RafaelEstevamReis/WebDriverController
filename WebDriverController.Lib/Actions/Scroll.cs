@@ -19,6 +19,11 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
             controller.ExecuteScript($"window.scrollTo({XPos}, {YPos});");
             return controller;
         }
+        public static WDController ScrollBy(this WDController controller, int XPos, int YPos)
+        {
+            controller.ExecuteScript($"window.scrollBy({XPos}, {YPos});");
+            return controller;
+        }
         public static WDController ScrollTop(this WDController controller)
         {
             controller.ExecuteScript("document.documentElement.scrollTop = 0;");
