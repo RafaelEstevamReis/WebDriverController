@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using RafaelEstevam.WebDriverController.Interfaces;
@@ -101,7 +103,7 @@ namespace RafaelEstevam.WebDriverController.Actions
         public static WaitUntil IsVisible(By Element) => new WaitUntil(Element, Is.Visible);
         public static WaitUntil IsDestroyed(By Element) => new WaitUntil(Element, Is.Destroyed);
     }
-    public static class InteractWaitUntil
+    public static class WaitUntilExtension
     {
         public static Controller WaitUntil_Visible(this Controller controller, By locator)
         {
