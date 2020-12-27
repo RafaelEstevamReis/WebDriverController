@@ -1,8 +1,6 @@
 ﻿using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.Events;
-using RafaelEstevam.Simple.Spider.Helper;
 using RafaelEstevam.WebDriverController;
 using RafaelEstevam.WebDriverController.Actions;
 
@@ -45,10 +43,3 @@ ctr.GoTo("https://quotes.toscrape.com/")
 
 Console.WriteLine("-END-");
 Console.ReadKey();
-
-
-
-static void navigated(object sender, WebDriverNavigationEventArgs args)
-{
-    Console.WriteLine($"I'm at: {args.Url}");
-}
