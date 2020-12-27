@@ -4,7 +4,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using RafaelEstevam.WebDriverController.Interfaces;
 
-namespace RafaelEstevam.WebDriverController.Lib.Actions
+namespace RafaelEstevam.WebDriverController.Actions
 {
     public sealed class WaitFor : IWDAction
     {
