@@ -6,6 +6,9 @@ Does this at least compile?
 \
 ![.NET](https://github.com/RafaelEstevamReis/WebDriverController/workflows/.NET/badge.svg)
 
+[![NuGet](https://buildstats.info/nuget/RafaelEstevam.WebDriverController)](https://www.nuget.org/packages/RafaelEstevam.WebDriverController/)
+[![The MIT License](https://img.shields.io/github/license/RafaelEstevamReis/WebDriverController)](https://github.com/RafaelEstevamReis/WebDriverController/blob/master/LICENSE)
+
 ------
 Jump to:
 - [WebDriver Controller](#webdriver-controller)
@@ -15,6 +18,8 @@ Jump to:
 ## Using
 
 Import package, create a new WDController with your IWebDriver and done
+
+Install the [NuGet package](https://www.nuget.org/packages/RafaelEstevam.WebDriverController): `Install-Package RafaelEstevam.WebDriverController`
 
 ## Example
 
