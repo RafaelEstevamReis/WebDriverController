@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Specialized;
 
-namespace RafaelEstevam.WebDriverController.Lib.Proxy
+namespace RafaelEstevam.WebDriverController.Proxy
 {
     public class ProxyDataEventArgs : EventArgs
     {

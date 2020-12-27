@@ -1,9 +1,9 @@
 ﻿using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using RafaelEstevam.WebDriverController.Lib.Interfaces;
+using RafaelEstevam.WebDriverController.Interfaces;
 
-namespace RafaelEstevam.WebDriverController.Lib.Actions
+namespace RafaelEstevam.WebDriverController.Actions
 {
     public sealed class WaitUntil : IWDAction
     {
@@ -28,7 +28,7 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
             Test = test;
         }
 
-        public IWDActionResult Execute(WDController wDController)
+        public IWDActionResult Execute(Controller wDController)
         {
             var driver = wDController.WrappedDriver;
 
@@ -103,55 +103,55 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
     }
     public static class InteractWaitUntil
     {
-        public static WDController WaitUntil_Visible(this WDController controller, By locator)
+        public static Controller WaitUntil_Visible(this Controller controller, By locator)
         {
             return controller.Do(WaitUntil.IsVisible(locator));
         }
-        public static WDController WaitUntil_Visible(this WDController controller, By locator, TimeSpan timeout)
+        public static Controller WaitUntil_Visible(this Controller controller, By locator, TimeSpan timeout)
         {
             var w = WaitUntil.IsVisible(locator);
             w.Timeout = timeout;
             return controller.Do(w);
         }
 
-        public static WDController WaitUntil_IsClickable(this WDController controller, By locator)
+        public static Controller WaitUntil_IsClickable(this Controller controller, By locator)
         {
             return controller.Do(WaitUntil.IsClickable(locator));
         }
-        public static WDController WaitUntil_IsClickable(this WDController controller, By locator, TimeSpan timeout)
+        public static Controller WaitUntil_IsClickable(this Controller controller, By locator, TimeSpan timeout)
         {
             var w = WaitUntil.IsClickable(locator);
             w.Timeout = timeout;
             return controller.Do(w);
         }
 
-        public static WDController WaitUntil_Exists(this WDController controller, By locator)
+        public static Controller WaitUntil_Exists(this Controller controller, By locator)
         {
             return controller.Do(WaitUntil.Exists(locator));
         }
-        public static WDController WaitUntil_Exists(this WDController controller, By locator, TimeSpan timeout)
+        public static Controller WaitUntil_Exists(this Controller controller, By locator, TimeSpan timeout)
         {
             var w = WaitUntil.Exists(locator);
             w.Timeout = timeout;
             return controller.Do(w);
         }
 
-        public static WDController WaitUntil_IsDestroyed(this WDController controller, By locator)
+        public static Controller WaitUntil_IsDestroyed(this Controller controller, By locator)
         {
             return controller.Do(WaitUntil.IsDestroyed(locator));
         }
-        public static WDController WaitUntil_IsDestroyed(this WDController controller, By locator, TimeSpan timeout)
+        public static Controller WaitUntil_IsDestroyed(this Controller controller, By locator, TimeSpan timeout)
         {
             var w = WaitUntil.IsDestroyed(locator);
             w.Timeout = timeout;
             return controller.Do(w);
         }
 
-        public static WDController WaitUntil_UserNavigate(this WDController controller)
+        public static Controller WaitUntil_UserNavigate(this Controller controller)
         {
             return WaitUntil_UserNavigate(controller, TimeSpan.FromMinutes(2));
         }
-        public static WDController WaitUntil_UserNavigate(this WDController controller, TimeSpan timeout)
+        public static Controller WaitUntil_UserNavigate(this Controller controller, TimeSpan timeout)
         {
             var w = WaitUntil.IsDestroyed(By.TagName("body"));
             w.Timeout = timeout;

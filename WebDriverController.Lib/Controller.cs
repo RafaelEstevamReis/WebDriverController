@@ -1,19 +1,17 @@
 ﻿using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.Events;
-using RafaelEstevam.WebDriverController.Lib.Interfaces;
+using RafaelEstevam.WebDriverController.Interfaces;
 
-namespace RafaelEstevam.WebDriverController.Lib
+namespace RafaelEstevam.WebDriverController
 {
-    public class WDController : EventFiringWebDriver
+    public class Controller : EventFiringWebDriver
     {
-        public WDController(IWebDriver driver) :
+        public Controller(IWebDriver driver) :
             base (driver)
-        {
+        { }
 
-        }
-
-        public WDController Do(IWDAction action)
+        public Controller Do(IWDAction action)
         {
             IWDActionResult result = action.Execute(this);
 
@@ -22,14 +20,22 @@ namespace RafaelEstevam.WebDriverController.Lib
             return this;
         }
 
-        public WDController Inspect(Action<WDController> action)
+        public Controller Inspect(Action<Controller> action)
         {
             action(this);
             return this;
         }
-        public WDController InspectIf(Func<WDController, bool> condition, 
-                                      Action<WDController> action, 
-                                      Action<WDController> actionElse = null)
+        public Controller Inspect(Action<Controller, HtmlAgilityPack.HtmlDocument> action)
+        {
+            var doc = new HtmlAgilityPack.HtmlDocument();
+            doc.LoadHtml(PageSource);
+
+            action(this, doc);
+            return this;
+        }
+        public Controller InspectIf(Func<Controller, bool> condition, 
+                                      Action<Controller> action, 
+                                      Action<Controller> actionElse = null)
         {
             if (condition(this))
             {

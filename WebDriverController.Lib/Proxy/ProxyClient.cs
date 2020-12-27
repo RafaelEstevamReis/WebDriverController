@@ -5,7 +5,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RafaelEstevam.WebDriverController.Lib.Proxy
+namespace RafaelEstevam.WebDriverController.Proxy
 {
     public class ProxyClient
     {

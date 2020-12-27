@@ -1,7 +1,7 @@
 ﻿using HtmlAgilityPack;
 using OpenQA.Selenium;
 
-namespace RafaelEstevam.WebDriverController.Lib.Extensions
+namespace RafaelEstevam.WebDriverController.Extensions
 {
     public static class WebElementExtensions
     {

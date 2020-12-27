@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using RafaelEstevam.WebDriverController.Lib.Interfaces;
-using RafaelEstevam.WebDriverController.Lib.Results;
+using RafaelEstevam.WebDriverController.Interfaces;
+using RafaelEstevam.WebDriverController.Results;
 
-namespace RafaelEstevam.WebDriverController.Lib.Actions
+namespace RafaelEstevam.WebDriverController.Actions
 {
     public class Sleep : IWDAction
     {
@@ -14,7 +14,7 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
             this.span = span;
         }
 
-        public IWDActionResult Execute(WDController wDController)
+        public IWDActionResult Execute(Controller wDController)
         {
             Task.Delay(span).Wait();
             return new None();
@@ -22,11 +22,11 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
     }
     public static class SleepExtension
     {
-        public static WDController Sleep(this WDController controller, TimeSpan span)
+        public static Controller Sleep(this Controller controller, TimeSpan span)
         {
             return controller.Do(new Sleep(span));
         }
-        public static WDController Sleep(this WDController controller, int timeInMilliseconds)
+        public static Controller Sleep(this Controller controller, int timeInMilliseconds)
         {
             return controller.Do(new Sleep(TimeSpan.FromMilliseconds(timeInMilliseconds)));
         }

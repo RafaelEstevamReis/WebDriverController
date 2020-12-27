@@ -3,13 +3,11 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.Events;
 using RafaelEstevam.Simple.Spider.Helper;
-using RafaelEstevam.WebDriverController.Lib;
-using RafaelEstevam.WebDriverController.Lib.Actions;
+using RafaelEstevam.WebDriverController;
+using RafaelEstevam.WebDriverController.Actions;
 
-ChromeOptions opt = new ChromeOptions();
-
-using IWebDriver driver = new ChromeDriver(opt);
-var ctr = new WDController(driver);
+using IWebDriver driver = new ChromeDriver();
+var ctr = new Controller(driver);
 
 ctr.GoTo("https://quotes.toscrape.com/")
    // wait until first quotes are visible (author clickable)
@@ -20,7 +18,7 @@ ctr.GoTo("https://quotes.toscrape.com/")
    })
    .WaitUntil_IsClickable(By.XPath("//form/input[2]"))
    //.Do(new WaitUntil(By.XPath("//form/input[2]"), WaitUntil.Is.Clickable))
-   .Inspect((WDController c) =>
+   .Inspect((Controller c) =>
    {
        c.FindElement(By.Id("username"))
         .SendKeys("me@myself.com");
@@ -29,17 +27,18 @@ ctr.GoTo("https://quotes.toscrape.com/")
 
        // take proof
        var ss = c.GetScreenshot();
+       //ss.SaveAsFile(...)
 
        c.FindElement(By.XPath("//form/input[2]"))
         .Submit();
    })
-   .Inspect((WDController c) =>
+   .Inspect((controller, document) =>
    {
        Console.WriteLine("Logged in !");
        // all html is at:
-       var html = c.PageSource;
-       // Extract all the things !
-       var document = HtmlParseHelper.ParseHtmlDocument(html);
+       var html = controller.PageSource;
+       // Extract all the things with HtmlAgilityPack html parsing !
+       var node = document.DocumentNode;
    })
    // end the party
    .Quit();

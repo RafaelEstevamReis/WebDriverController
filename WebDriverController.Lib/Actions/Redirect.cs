@@ -1,8 +1,8 @@
 ﻿using System;
 using OpenQA.Selenium;
-using RafaelEstevam.WebDriverController.Lib.Interfaces;
+using RafaelEstevam.WebDriverController.Interfaces;
 
-namespace RafaelEstevam.WebDriverController.Lib.Actions
+namespace RafaelEstevam.WebDriverController.Actions
 {
     public sealed class Redirect : IWDAction
     {
@@ -16,18 +16,18 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
             Uri = uri ?? throw new ArgumentNullException(nameof(uri));
         }
 
-        public IWDActionResult Execute(WDController wDController)
+        public IWDActionResult Execute(Controller wDController)
         {
             return new Results.Redirect(Uri);
         }
     }
     public static class RedirectExtension
     {
-        public static WDController GoTo(this WDController wDController, Uri uri)
+        public static Controller GoTo(this Controller wDController, Uri uri)
         {
             return wDController.Do(new Redirect(uri));
         }
-        public static WDController GoTo(this WDController wDController, string url)
+        public static Controller GoTo(this Controller wDController, string url)
         {
             return wDController.Do(new Redirect(url));
         }

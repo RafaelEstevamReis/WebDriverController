@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
-using RafaelEstevam.WebDriverController.Lib.Interfaces;
+using RafaelEstevam.WebDriverController.Interfaces;
 
-namespace RafaelEstevam.WebDriverController.Lib.Actions
+namespace RafaelEstevam.WebDriverController.Actions
 {
     public sealed class ResultAction : IWDAction
     {
@@ -12,7 +12,7 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
 
         public IWDActionResult Result { get; }
 
-        public IWDActionResult Execute(WDController wDController)
+        public IWDActionResult Execute(Controller wDController)
         {
             return Result;
         }

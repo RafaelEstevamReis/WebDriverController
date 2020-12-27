@@ -1,23 +1,23 @@
 ﻿using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using RafaelEstevam.WebDriverController.Lib.Interfaces;
+using RafaelEstevam.WebDriverController.Interfaces;
 
-namespace RafaelEstevam.WebDriverController.Lib.Actions
+namespace RafaelEstevam.WebDriverController.Actions
 {
     public sealed class Interact : IWDAction
     {
-        public Interact(By locator, Action<WDController, IWebElement> action)
+        public Interact(By locator, Action<Controller, IWebElement> action)
         {
             Locator = locator ?? throw new ArgumentNullException(nameof(locator));
             Action = action ?? throw new ArgumentNullException(nameof(action));
         }
 
         public By Locator { get; }
-        public Action<WDController, IWebElement> Action { get; }
+        public Action<Controller, IWebElement> Action { get; }
         public TimeSpan Timeout { get; private set; } = TimeSpan.FromSeconds(10);
 
-        public IWDActionResult Execute(WDController wDController)
+        public IWDActionResult Execute(Controller wDController)
         {
             var wait = new WebDriverWait(wDController.WrappedDriver, Timeout);
 
@@ -47,7 +47,7 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
     }
     public static class InteractExtension
     {
-        public static WDController Interact(this WDController controller, By locator, Action<WDController, IWebElement> action)
+        public static Controller Interact(this Controller controller, By locator, Action<Controller, IWebElement> action)
         {
             return controller.Do(new Interact(locator, action));
         }

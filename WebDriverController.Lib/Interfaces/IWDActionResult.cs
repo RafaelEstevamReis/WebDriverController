@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using OpenQA.Selenium;
 
-namespace RafaelEstevam.WebDriverController.Lib.Interfaces
+namespace RafaelEstevam.WebDriverController.Interfaces
 {
     public interface IWDActionResult
     {
-        void Apply(WDController wDController, IWebDriver driver);
+        void Apply(Controller wDController, IWebDriver driver);
     }
 }

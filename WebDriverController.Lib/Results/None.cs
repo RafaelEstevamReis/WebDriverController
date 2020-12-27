@@ -1,11 +1,11 @@
 ﻿using OpenQA.Selenium;
-using RafaelEstevam.WebDriverController.Lib.Interfaces;
+using RafaelEstevam.WebDriverController.Interfaces;
 
-namespace RafaelEstevam.WebDriverController.Lib.Results
+namespace RafaelEstevam.WebDriverController.Results
 {
     public sealed class None : IWDActionResult
     {
-        public void Apply(WDController wDController, IWebDriver driver)
+        public void Apply(Controller wDController, IWebDriver driver)
         { }
     }
 }

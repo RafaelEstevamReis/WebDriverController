@@ -1,9 +1,9 @@
 ﻿using OpenQA.Selenium;
 
-namespace RafaelEstevam.WebDriverController.Lib.Interfaces
+namespace RafaelEstevam.WebDriverController.Interfaces
 {
     public interface IWDAction
     {
-        IWDActionResult Execute(WDController wDController);
+        IWDActionResult Execute(Controller wDController);
     }
 }

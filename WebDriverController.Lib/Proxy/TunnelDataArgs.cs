@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RafaelEstevam.WebDriverController.Lib.Proxy
+namespace RafaelEstevam.WebDriverController.Proxy
 {
     public class TunnelDataArgs
     {
