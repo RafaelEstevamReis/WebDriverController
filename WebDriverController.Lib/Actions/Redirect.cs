@@ -16,7 +16,7 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
             Uri = uri ?? throw new ArgumentNullException(nameof(uri));
         }
 
-        public IWDActionResult Execute(WDController wDController, IWebDriver driver)
+        public IWDActionResult Execute(WDController wDController)
         {
             return new Results.Redirect(Uri);
         }

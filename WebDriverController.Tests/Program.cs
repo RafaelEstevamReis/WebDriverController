@@ -5,7 +5,6 @@ using OpenQA.Selenium.Support.Events;
 using RafaelEstevam.Simple.Spider.Helper;
 using RafaelEstevam.WebDriverController.Lib;
 using RafaelEstevam.WebDriverController.Lib.Actions;
-using RafaelEstevam.WebDriverController.Lib.Proxy;
 
 ChromeOptions opt = new ChromeOptions();
 

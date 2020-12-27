@@ -12,7 +12,7 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
 
         public IWDActionResult Result { get; }
 
-        public IWDActionResult Execute(WDController wDController, IWebDriver driver)
+        public IWDActionResult Execute(WDController wDController)
         {
             return Result;
         }

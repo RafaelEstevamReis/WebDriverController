@@ -15,7 +15,7 @@ namespace RafaelEstevam.WebDriverController.Lib
 
         public WDController Do(IWDAction action)
         {
-            IWDActionResult result = action.Execute(this, WrappedDriver);
+            IWDActionResult result = action.Execute(this);
 
             result?.Apply(this, WrappedDriver);
 
@@ -50,6 +50,12 @@ namespace RafaelEstevam.WebDriverController.Lib
         public bool ElementExists(By by)
         {
             return FirstElementOrDefault(by) != null;
+        }
+
+        public T ExecuteScript<T>(string script, params object[] args)
+        {
+            var js = (IJavaScriptExecutor)WrappedDriver;
+            return (T)js.ExecuteScript(script, args);
         }
     }
 }

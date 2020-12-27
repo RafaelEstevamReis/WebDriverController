@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using OpenQA.Selenium;
 using RafaelEstevam.WebDriverController.Lib.Interfaces;
 using RafaelEstevam.WebDriverController.Lib.Results;
 
@@ -15,7 +14,7 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
             this.span = span;
         }
 
-        public IWDActionResult Execute(WDController wDController, IWebDriver driver)
+        public IWDActionResult Execute(WDController wDController)
         {
             Task.Delay(span).Wait();
             return new None();

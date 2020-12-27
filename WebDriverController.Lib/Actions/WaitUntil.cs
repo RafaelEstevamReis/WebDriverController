@@ -28,8 +28,10 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
             Test = test;
         }
 
-        public IWDActionResult Execute(WDController wDController, IWebDriver driver)
+        public IWDActionResult Execute(WDController wDController)
         {
+            var driver = wDController.WrappedDriver;
+
             var wait = new WebDriverWait(driver, Timeout);
 
             if (Test == Is.Destroyed)

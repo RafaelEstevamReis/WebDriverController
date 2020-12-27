@@ -17,9 +17,9 @@ namespace RafaelEstevam.WebDriverController.Lib.Actions
         public Action<WDController, IWebElement> Action { get; }
         public TimeSpan Timeout { get; private set; } = TimeSpan.FromSeconds(10);
 
-        public IWDActionResult Execute(WDController wDController, IWebDriver driver)
+        public IWDActionResult Execute(WDController wDController)
         {
-            var wait = new WebDriverWait(driver, Timeout);
+            var wait = new WebDriverWait(wDController.WrappedDriver, Timeout);
 
             wait.Until((d) =>
             {
