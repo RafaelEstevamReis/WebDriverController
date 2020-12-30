@@ -1,6 +1,6 @@
 # WebDriver Controller
 
-This is a wrapper around OpenQA.Selenium WebDriver to ease the use for very small projects
+This is a wrapper around OpenQA.Selenium WebDriver to ease the use for small projects
 
 Does this at least compile? 
 \
@@ -27,7 +27,9 @@ Full working example:
 ~~~C#
 using RafaelEstevam.WebDriverController;
 using RafaelEstevam.WebDriverController.Actions;
+using RafaelEstevam.WebDriverController.Extensions;
 
+// use your driver of choice
 using IWebDriver driver = new ChromeDriver();
 var ctr = new Controller(driver);
 
@@ -42,6 +44,10 @@ ctr.GoTo("https://quotes.toscrape.com/")
    //.Do(new WaitUntil(By.XPath("//form/input[2]"), WaitUntil.Is.Clickable))
    .Inspect((Controller c) =>
    {
+       // You can change element's content
+       c.FindElement(By.XPath("//form//label"))
+        .SetInnerHTML(c, "Put the name down there...");
+
        c.FindElement(By.Id("username"))
         .SendKeys("me@myself.com");
        c.FindElement(By.Id("password"))
