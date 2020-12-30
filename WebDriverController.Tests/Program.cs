@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using RafaelEstevam.WebDriverController;
 using RafaelEstevam.WebDriverController.Actions;
+using RafaelEstevam.WebDriverController.Extensions;
 
 using IWebDriver driver = new ChromeDriver();
 var ctr = new Controller(driver);
@@ -18,6 +19,10 @@ ctr.GoTo("https://quotes.toscrape.com/")
    //.Do(new WaitUntil(By.XPath("//form/input[2]"), WaitUntil.Is.Clickable))
    .Inspect((Controller c) =>
    {
+       // Change the html contents of the 'Username' Label
+       c.FindElement(By.XPath("//form//label"))
+        .SetInnerHTML(c, "Put the name down there...");
+       // Fill credentials
        c.FindElement(By.Id("username"))
         .SendKeys("me@myself.com");
        c.FindElement(By.Id("password"))

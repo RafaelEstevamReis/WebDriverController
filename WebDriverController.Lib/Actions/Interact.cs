@@ -7,6 +7,8 @@ namespace RafaelEstevam.WebDriverController.Actions
 {
     public sealed class Interact : IWDAction
     {
+        public static TimeSpan DefaultTimeout { get; set; } = TimeSpan.FromSeconds(20);
+
         public Interact(By locator, Action<Controller, IWebElement> action)
         {
             Locator = locator ?? throw new ArgumentNullException(nameof(locator));
@@ -15,7 +17,7 @@ namespace RafaelEstevam.WebDriverController.Actions
 
         public By Locator { get; }
         public Action<Controller, IWebElement> Action { get; }
-        public TimeSpan Timeout { get; private set; } = TimeSpan.FromSeconds(10);
+        public TimeSpan Timeout { get; private set; } = DefaultTimeout;
 
         public IWDActionResult Execute(Controller wDController)
         {

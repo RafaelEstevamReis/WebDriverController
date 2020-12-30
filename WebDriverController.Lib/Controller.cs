@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.IO;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.Events;
 using RafaelEstevam.WebDriverController.Interfaces;
@@ -68,5 +70,21 @@ namespace RafaelEstevam.WebDriverController
             var js = (IJavaScriptExecutor)WrappedDriver;
             return (T)js.ExecuteScript(script, args);
         }
+
+        public Bitmap GetScreenshotImage()
+        {
+            var screenShot = ((ITakesScreenshot)WrappedDriver).GetScreenshot();
+
+            using (var screenBmp = new Bitmap(new MemoryStream(screenShot.AsByteArray)))
+            {
+                return screenBmp;
+            }
+        }
+
+        //public Bitmap GetScreenshotImage(IWebElement element)
+        //{
+        //    var ss = GetScreenshotImage();
+        //    return ss.Clone(new Rectangle(element.Location, element.Size), ss.PixelFormat);
+        //}
     }
 }

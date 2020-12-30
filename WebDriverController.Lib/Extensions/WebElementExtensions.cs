@@ -15,6 +15,20 @@ namespace RafaelEstevam.WebDriverController.Extensions
             // https://quirksmode.org/dom/html/
             return element.GetAttribute("outerHTML");
         }
+
+        public static IWebElement SetInnerHTML(this IWebElement element, Controller controller, string Html)
+        {
+            string script = $"arguments[0].innerHTML=arguments[1]";
+            controller.ExecuteScript(script, element, Html);
+            return element;
+        }
+        public static IWebElement SetOuterHTML(this IWebElement element, Controller controller, string Html)
+        {
+            string script = $"arguments[0].outerHTML=arguments[1]";
+            controller.ExecuteScript(script, element, Html);
+            return element;
+        }
+
         public static HtmlNode GetHtmlDocument(this IWebElement element)
         {
             return HtmlNode.CreateNode(element.GetOuterHTML());
