@@ -1,6 +1,6 @@
 # WebDriver Controller
 
-This is a wrapper around OpenQA.Selenium WebDriver to ease the use for small projects
+This is a chainable wrapper around OpenQA.Selenium WebDriver to ease the use for small projects
 
 Does this at least compile? 
 \
