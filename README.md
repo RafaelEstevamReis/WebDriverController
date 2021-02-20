@@ -21,6 +21,8 @@ Import package, create a new WDController with your IWebDriver and done
 
 Install the [NuGet package](https://www.nuget.org/packages/RafaelEstevam.WebDriverController): `Install-Package RafaelEstevam.WebDriverController`
 
+I suggest using this package for crawled data storage: [SqliteWrapper](https://github.com/RafaelEstevamReis/SqliteWrapper) [![NuGet](https://buildstats.info/nuget/Simple.Sqlite)](https://www.nuget.org/packages/Simple.Sqlite)
+
 ## Example
 
 Full working example:
