@@ -4,7 +4,7 @@
     <TargetFrameworks>netcoreapp3.1;netstandard2.0;NET45;net5.0</TargetFrameworks>
     <RootNamespace>RafaelEstevam.WebDriverController</RootNamespace>
     <PackageId>RafaelEstevam.WebDriverController</PackageId>
-    <Version>0.4.1</Version>
+    <Version>0.4.2</Version>
     <Company>RafaelEstevam</Company>
     <Product>RafaelEstevam.WebDriverController</Product>
     <Description>A helper controller for OpenQA Selenium WebDriver</Description>
@@ -13,7 +13,7 @@
     <RepositoryUrl>https://github.com/RafaelEstevamReis/WebDriverController</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>webdriver</PackageTags>
-    <PackageReleaseNotes>Paired with commit 3f1ae18
+    <PackageReleaseNotes>Paired with commit e06d18e
 https://github.com/RafaelEstevamReis/WebDriverController</PackageReleaseNotes>
     <Authors>RafaelEstevam</Authors>
     <AssemblyName>WebDriverController</AssemblyName>
