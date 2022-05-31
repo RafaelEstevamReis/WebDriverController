@@ -71,6 +71,7 @@ namespace RafaelEstevam.WebDriverController
             return (T)js.ExecuteScript(script, args);
         }
 
+#if !NET6_0
         public Bitmap GetScreenshotImage()
         {
             var screenShot = ((ITakesScreenshot)WrappedDriver).GetScreenshot();
@@ -80,6 +81,7 @@ namespace RafaelEstevam.WebDriverController
                 return screenBmp;
             }
         }
+#endif
 
         //public Bitmap GetScreenshotImage(IWebElement element)
         //{
