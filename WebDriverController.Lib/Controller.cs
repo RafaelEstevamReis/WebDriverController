@@ -71,6 +71,13 @@ namespace RafaelEstevam.WebDriverController
             return (T)js.ExecuteScript(script, args);
         }
 
+        public Screenshot GetScreenshot()
+        {
+            return ((ITakesScreenshot)WrappedDriver).GetScreenshot();
+        }
+        public void SaveScreenshot(string path)
+            => GetScreenshot().SaveAsFile(path);
+
 #if !NET6_0
         public Bitmap GetScreenshotImage()
         {
